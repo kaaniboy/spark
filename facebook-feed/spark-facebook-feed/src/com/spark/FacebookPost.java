@@ -1,5 +1,7 @@
 package com.spark;
 
+import android.graphics.Bitmap;
+
 public class FacebookPost {
 	private String message;
 	private String URL;
@@ -11,6 +13,10 @@ public class FacebookPost {
 		URL = address;
 		imageURL = imageAddress;
 		date = d;
+	}
+	
+	public boolean hasImage() {
+		return imageURL != null;
 	}
 	
 	public String getMessage() {

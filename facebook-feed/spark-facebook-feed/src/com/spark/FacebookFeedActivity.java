@@ -14,39 +14,47 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-public class FacebookFeedActivity extends ActionBarActivity implements AsyncTaskListener<ArrayList<FacebookPost>>{
+
+public class FacebookFeedActivity extends ActionBarActivity implements
+		AsyncTaskListener<ArrayList<FacebookPost>> {
 
 	FacebookFeedAdapter adapter;
 	ListView listView;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        
-        setContentView(R.layout.activity_facebook_feed);
-        listView = (ListView) findViewById(R.id.list_view);
-        
-        new RetrievePostsTask(this).execute(0);
 
-    }
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 
+		setContentView(R.layout.activity_facebook_feed);
+		listView = (ListView) findViewById(R.id.list_view);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-    	MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.facebook_feed, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-    
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-    	return true;
-    }
-    
+		new RetrievePostsTask(this).execute(0);
+
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.facebook_feed, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		return true;
+	}
+
 	@Override
 	public void onTaskComplete(ArrayList<FacebookPost> data) {
+		for (FacebookPost p : data) {
+			if (p.hasImage()) {
+				System.out.println(p.getImageURL());
+			}
+		}
+
 		adapter = new FacebookFeedAdapter(this, data);
-        listView.setAdapter(adapter);
-		
+		listView.setAdapter(adapter);
+
 	}
-    
+
 }

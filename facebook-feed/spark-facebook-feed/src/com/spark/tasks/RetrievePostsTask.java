@@ -23,9 +23,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 public class RetrievePostsTask extends AsyncTask<Integer, Integer, ArrayList<FacebookPost>> {
-	private static final String API_KEY = "CAACEdEose0cBAAQy15boZBxT56qT3jpdYlNcCiywsiIgvlgPZCNmWepOf6" +
-											"ykR6dAzB1p94xmZAIZCTuBiVGfsVDc9XTDhtuN4DeEDsbPhLQy0xWrjgqhe8gcZAgb2JW1ZBGzM3f3d7sC8uu0NPIoUKZBMwZ" +
-											"BRFZBUH9840ZAX2LfgTIFuDJrymQZC1WZAZAOZCkG0ehcgZD";
+	private static final String API_KEY = "CAACEdEose0cBADMNhLxSUx8cBxae18R9K4GeCpFSyOf7SAAhgmflzdXm6OLHUxIF6Ttt5pBkas29Rhbgqx0SvwekXfsGnYYSZAz8pVmedDzAsHOl2RjZC8ZCDRXQZB1CVK7jaVZBpHhYZBxgqqsAJZCSt7Dh1xbvNKTRQ77C5M35uDpAYmfyjE8ee8mfncMOfBkZAOWfZCOLK5wZDZD";
 
 	
 	private static final String URL = "https://graph.facebook.com/GilbertFireDept/posts?access_token=";
