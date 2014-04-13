@@ -1,8 +1,66 @@
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:stretchColumns="1"
+    android:orientation="vertical"
+    android:id="@+id/detailsLinearLayout"
     tools:context=".FireStationDetails">
+<!-- 
 
-</TableLayout>
+	<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    xmlns:tools="http://schemas.android.com/tools"
+	    android:layout_width="fill_parent"
+	    android:layout_height="100dp"
+	    android:stretchColumns="1"
+	    tools:context=".FireStationDetails">
+	    <TableRow
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent">
+
+	        <TextView
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent"
+	            android:padding="3dip"
+	            android:text="Hello"
+	            android:textSize="30dp" />
+
+	        <TextView
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent"
+	            android:gravity="right"
+	            android:padding="3dip"
+	            android:text="World"
+	            android:textSize="30sp" />
+
+	    </TableRow>
+	
+	    <TableRow
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent">
+
+	        <TextView
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent"
+	            android:padding="3dip"
+	            android:text="Testing"
+	            android:textSize="30dp" />
+
+	        <TextView
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent"
+	            android:gravity="right"
+	            android:padding="3dip"
+	            android:text="1234"
+	            android:textSize="30sp" />
+
+	    </TableRow>
+	
+	</TableLayout>
+
+    <ImageView
+        android:layout_width="226dp"
+        android:layout_height="226dp"
+        android:baselineAlignBottom="true"
+        android:src="@drawable/ic_launcher" /> -->
+</LinearLayout>

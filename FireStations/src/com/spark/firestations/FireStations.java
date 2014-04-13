@@ -32,7 +32,7 @@ public class FireStations extends Activity {
 		setContentView(R.layout.activity_fire_stations);
         listView = (ListView) findViewById(R.id.listView1);
         double[] gps = getGPS();
-        System.out.printf("(%f, %f)\n", gps[0], gps[1]);
+//        System.out.printf("(%f, %f)\n", gps[0], gps[1]);
         userLatitude = gps[0];
         userLongitude = gps[1];
         stationData = new HashMap<String, Station>();
@@ -47,8 +47,16 @@ public class FireStations extends Activity {
         stationData.put("Fire Station #10", new Station(10, "1330 W. Guadalupe Rd.", "Gilbert", "85233", 33.364706, -111.818596, "July 2012", "(480) 503-6300"));
         stationData.put("Fire Station #11", new Station(11, "2860 E. Riggs Rd.", "Gilbert", "85298", 33.219769, -111.727636, "November 2003", "(480) 503-6300"));
         
-        List<String> values = new ArrayList<String>(stationData.keySet());
-        
+        List<String> names = new ArrayList<String>(stationData.keySet());
+        List<String> values = new ArrayList<String>();
+        for(String name : names){
+        	Station s = stationData.remove(name);
+        	name += "                                 \t".substring(name.length());
+        	double dist = haversine(userLatitude, userLongitude, s.latitude, s.longitude);
+        	name += String.format("(%.3g mi)", dist);
+        	values.add(name);
+        	stationData.put(name, s);
+        }
 //        System.out.println("Sorting");
 //        System.out.println(values.toString());
         Collections.sort(values, new StationComparator(userLatitude, userLongitude));
@@ -62,15 +70,28 @@ public class FireStations extends Activity {
               public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //            	  int itemPosition = position;
             	  String name = (String)listView.getItemAtPosition(position);
-            	  System.out.println(name);
+//            	  System.out.println(name);
             	  Intent details = new Intent(FireStations.this, FireStationDetails.class);
             	  Station s = stationData.get(name);
-            	  System.out.println("In here with "+s.address);
+//            	  System.out.println("In here with "+s.address);
             	  details.putExtra("station", s);
             	  FireStations.this.startActivity(details);
                
               }
          });
+	}
+	double haversine(double lat1, double lon1, double lat2, double lon2){
+		lat1 *= Math.PI/180;
+		lon1 *= Math.PI/180;
+		lat2 *= Math.PI/180;
+		lon2 *= Math.PI/180;
+		final double earthRadius = 3963.1676; //miles
+		double dlon = lon2 - lon1;
+		double dlat = lat2 - lat1;
+		double a = Math.pow(Math.sin(dlat/2), 2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(dlon/2), 2);
+		double c = 2 * Math.asin(Math.sqrt(a));
+		double inMiles = earthRadius * c;
+		return inMiles;
 	}
 	private double[] getGPS() {
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);  
@@ -92,11 +113,6 @@ public class FireStations extends Activity {
         }
         return gps;
 	}
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_fire_stations, menu);
-		return true;
-	}
 	
 	class StationComparator implements Comparator<String>{
 		double latitude, longitude;
@@ -105,19 +121,16 @@ public class FireStations extends Activity {
 			this.longitude = longitude;
 		}
 		public int compare(String string1, String string2){
-			/*
-			 * Compares based on Euclidean distance from the user
-			 */
 			Station s1 = stationData.get(string1);
 			Station s2 = stationData.get(string2);
-			double dist = (s1.latitude - latitude)*(s1.latitude - latitude) + 
-				          (s1.longitude - longitude)*(s1.longitude - longitude) -
-				          (s2.latitude - latitude)*(s2.latitude - latitude) - 
-				          (s2.longitude - longitude)*(s2.longitude - longitude);
-			if (dist < 0){
+			
+			double dist1 = haversine(latitude, longitude, s1.latitude, s1.longitude);
+			double dist2 = haversine(latitude, longitude, s2.latitude, s2.longitude);
+
+			if (dist1 < dist2){
 				return -1;
 			}else{
-				if (dist == 0) return 0;
+				if (dist1 == dist2) return 0;
 				else return 1;
 			}
 		}

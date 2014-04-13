@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -21,28 +23,29 @@ public class FireStationDetails extends Activity {
 		setContentView(R.layout.activity_fire_station_details);
 		Intent intent = getIntent();
 		station = (Station) intent.getParcelableExtra("station");
-		System.out.println("Displaying details for "+station);
-		System.out.println(station.latitude);
-		
+//		System.out.println("Displaying details for "+station);
+//		System.out.println(station.latitude);
+		LinearLayout linear = (LinearLayout) findViewById(R.id.detailsLinearLayout);
 		TableLayout table = new TableLayout(this);
-		// Java. You succeed!
 		FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
-		        ViewGroup.LayoutParams.FILL_PARENT,
-		        ViewGroup.LayoutParams.FILL_PARENT);
+				
+		        ViewGroup.LayoutParams.MATCH_PARENT,
+		        300);//ViewGroup.LayoutParams.MATCH_PARENT);
+		
 		table.setLayoutParams(lp);
 		table.setStretchAllColumns(true);
-
+		linear.addView(table);
 		TableLayout.LayoutParams rowLp = new TableLayout.LayoutParams(
-		        ViewGroup.LayoutParams.FILL_PARENT,
-		        ViewGroup.LayoutParams.FILL_PARENT,
+		        ViewGroup.LayoutParams.MATCH_PARENT,
+		        ViewGroup.LayoutParams.MATCH_PARENT,
 		        1.0f);
 		TableRow.LayoutParams cellLp = new TableRow.LayoutParams(
-		        ViewGroup.LayoutParams.FILL_PARENT,
-		        ViewGroup.LayoutParams.FILL_PARENT,
+		        ViewGroup.LayoutParams.MATCH_PARENT,
+		        ViewGroup.LayoutParams.MATCH_PARENT,
 		        1.0f);
 		TableRow row;
 		TextView t;
-		final float textSize = 20.0f;
+		final float textSize = 18.0f;
 		row = new TableRow(this);
 		t = new TextView(this); t.setTextSize(textSize);
 		t.setText("Fire Station:");
@@ -79,27 +82,22 @@ public class FireStationDetails extends Activity {
 		row.addView(t, cellLp);
 		table.addView(row, rowLp);
 
-		
-		/*		for (int r = 0; r < 8; ++r)
-		{
-		    TableRow row = new TableRow(this);
-		    for (int c = 0; c < 2; ++c)
-		    {
-		        TextView t = new TextView(this);
-		        t.setTextSize(textSize);
-		        t.setText("Hello");
-		        row.addView(t, cellLp);
-		    }
-		    table.addView(row, rowLp);
-		}*/
-		setContentView(table);
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_fire_station_details, menu);
-		return true;
+		ImageView iv = new ImageView(this);
+		int im = 0;
+		switch (station.stationNumber){
+		case 1: im=R.drawable.first; break;
+		case 2: im=R.drawable.second; break;
+		case 3: im=R.drawable.third; break;
+		case 4: im=R.drawable.fourth; break;
+		case 5: im=R.drawable.fifth; break;
+		case 6: im=R.drawable.sixth; break;
+		case 7: im=R.drawable.seventh; break;
+		case 8: im=R.drawable.eighth; break;
+		case 10: im=R.drawable.tenth; break;
+		case 11: im=R.drawable.eleventh; break;
+		}
+		if (im != 0) iv.setBackgroundResource(im);
+		linear.addView(iv, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1.0f));
 	}
 
 }
